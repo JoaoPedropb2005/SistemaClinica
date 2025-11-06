@@ -68,13 +68,13 @@ public class MedicoServlet extends HttpServlet {
         
         if(op != null && op.equals("deletar")){
             
-            String crm = request.getParameter("codigo");
+            String crm = request.getParameter("crm");
             
             RepositorioMedico.deletar(crm);
             
             request.getSession().setAttribute("msg", "Medico deletado com sucesso!");
             
-            response.sendRedirect("Medicos");
+            response.sendRedirect("MedicoServlet");
             
             return;
         }
@@ -84,7 +84,7 @@ public class MedicoServlet extends HttpServlet {
             Medico m = RepositorioMedico.
                     ler(request.getParameter("crm"));
             
-            request.setAttribute("Medico", m);
+            request.setAttribute("medico", m);
             
             //getServletContext().getRequestDispatcher("/WEB-INF/cadastroservico.jsp")
             //        .forward(request, response);
@@ -141,7 +141,7 @@ public class MedicoServlet extends HttpServlet {
         
         
         
-        response.sendRedirect("Medicos");
+        response.sendRedirect("MedicoServlet");
     }
 
     /**

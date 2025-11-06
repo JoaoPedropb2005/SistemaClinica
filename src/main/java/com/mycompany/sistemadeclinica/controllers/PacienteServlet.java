@@ -68,13 +68,13 @@ public class PacienteServlet extends HttpServlet {
         
         if(op != null && op.equals("deletar")){
             
-            String cpf = request.getParameter("codigo");
+            String cpf = request.getParameter("cpf");
             
             RepositorioPaciente.deletar(cpf);
             
             request.getSession().setAttribute("msg", "Paciente deletado com sucesso!");
             
-            response.sendRedirect("Pacientes");
+            response.sendRedirect("PacienteServlet");
             
             return;
         }
@@ -84,7 +84,7 @@ public class PacienteServlet extends HttpServlet {
             Paciente p = RepositorioPaciente.
                     ler(request.getParameter("cpf"));
             
-            request.setAttribute("Paciente", p);
+            request.setAttribute("paciente", p);
             
             //getServletContext().getRequestDispatcher("/WEB-INF/cadastroservico.jsp")
             //        .forward(request, response);
@@ -122,7 +122,7 @@ public class PacienteServlet extends HttpServlet {
         
         String cpf = request.getParameter("cpf");
         String nome = request.getParameter("nome");
-        String endereco = request.getParameter("endereço");
+        String endereco = request.getParameter("endereco");
         String contato = request.getParameter("contato");
         String planoSaude = request.getParameter("planoSaude");
         
@@ -143,7 +143,7 @@ public class PacienteServlet extends HttpServlet {
         
         
         
-        response.sendRedirect("Pacientes");
+        response.sendRedirect("PacienteServlet");
     }
 
     /**
