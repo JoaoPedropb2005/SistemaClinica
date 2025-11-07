@@ -26,7 +26,7 @@
                 }
             
                 // CORREÇÃO: Pega a lista de indicadores da SESSÃO
-                List<IndicadorExame> indicadorExames = (List) session.getAttribute("indicadorExames");
+                List<IndicadorExame> indicadorExames = (List) session.getAttribute("IndicadorExames");
             %>
 
             <h1>Indicadores de Exame Cadastrados</h1>

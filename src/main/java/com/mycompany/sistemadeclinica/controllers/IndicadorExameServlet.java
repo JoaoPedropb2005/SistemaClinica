@@ -86,7 +86,7 @@ public class IndicadorExameServlet extends HttpServlet {
             IndicadorExame i = RepositorioIndicadorExame.
                     ler(codigo);
             
-            request.setAttribute("IndicadorExame", i);
+            request.setAttribute("indicadorExame", i);
             
             //getServletContext().getRequestDispatcher("/WEB-INF/cadastroservico.jsp")
             //        .forward(request, response);
@@ -99,11 +99,11 @@ public class IndicadorExameServlet extends HttpServlet {
         }
         
         
-        List<IndicadorExame> medicamentos = RepositorioIndicadorExame.lerTudo();
+        List<IndicadorExame> indicadorexames = RepositorioIndicadorExame.lerTudo();
         
         HttpSession session = request.getSession();
         
-        session.setAttribute("IndicadorExames", medicamentos);
+        session.setAttribute("IndicadorExames", indicadorexames);
         
         response.sendRedirect("IndicadorExames.jsp");
     }
