@@ -58,4 +58,24 @@ public class RepositorioMedico {
         return medicos;
     }
     
+    public static Medico login(String crm, String senha){
+        for(Medico m: medicos){
+            if(m.getCrm().equals(crm) && m.getSenha().equals(senha)){
+                return m;
+            }
+        }
+        return null;
+    }
+    
+    public static void alterarSenha(String crm, String senha){
+        
+        for(Medico mAux: medicos){
+            if(mAux.getCrm() == null ? crm == null : mAux.getCrm().equals(crm)){
+                mAux.setSenha(senha);
+                return;
+            }
+        }
+        
+    }
+    
 }

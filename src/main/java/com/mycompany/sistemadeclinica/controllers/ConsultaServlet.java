@@ -4,8 +4,11 @@
  */
 package com.mycompany.sistemadeclinica.controllers;
 
-import com.mycompany.sistemadeclinica.negocio.Medicamento;
-import com.mycompany.sistemadeclinica.repositorios.RepositorioMedicamento;
+import com.mycompany.sistemadeclinica.negocio.Consulta;
+import com.mycompany.sistemadeclinica.negocio.Medico;
+import com.mycompany.sistemadeclinica.negocio.Paciente;
+import com.mycompany.sistemadeclinica.repositorios.RepositorioConsultas;
+import com.mycompany.sistemadeclinica.repositorios.RepositorioPaciente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +16,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  *
  * @author jppb2
  */
-@WebServlet(name = "MedicamentoServlet", urlPatterns = {"/MedicamentoServlet"})
-public class MedicamentoServlet extends HttpServlet {
+@WebServlet(name = "ConsultaServlet", urlPatterns = {"/ConsultaServlet"})
+public class ConsultaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,23 +33,22 @@ public class MedicamentoServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    /*
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-    //        out.println("<!DOCTYPE html>");
-    //        out.println("<html>");
-    //        out.println("<head>");
-    //        out.println("<title>Servlet MedicamentoServlet</title>");
-    //        out.println("</head>");
-    //        out.println("<body>");
-    //        out.println("<h1>Servlet MedicamentoServlet at " + request.getContextPath() + "</h1>");
-    //        out.println("</body>");
-    //        out.println("</html>");
-    //    }
-    //} 
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ConsultaServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ConsultaServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -59,21 +59,23 @@ public class MedicamentoServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    /*
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       String op = request.getParameter("op");
+        //processRequest(request, response);
+        String op = request.getParameter("op");
         
         if(op != null && op.equals("deletar")){
             
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             
-            RepositorioMedicamento.deletar(codigo);
+            RepositorioConsultas.deletar(codigo);
             
-            request.getSession().setAttribute("msg", "Medicamento deletado com sucesso!");
+            request.getSession().setAttribute("msg", "Consulta deletada com sucesso!");
             
-            response.sendRedirect("MedicamentoServlet");
+            response.sendRedirect("ConsultaServlet");
             
             return;
         }
@@ -82,30 +84,30 @@ public class MedicamentoServlet extends HttpServlet {
             
             int codigo = Integer.parseInt(request.getParameter("codigo"));
             
-            Medicamento m = RepositorioMedicamento.
+            Consulta c = RepositorioConsultas.
                     ler(codigo);
             
-            request.setAttribute("indicadorExame", m);
+            request.setAttribute("Consulta", c);
             
             //getServletContext().getRequestDispatcher("/WEB-INF/cadastroservico.jsp")
             //        .forward(request, response);
             
-            getServletContext().getRequestDispatcher("/cadastroMedicamento.jsp")
-                   .forward(request, response);
+           // getServletContext().getRequestDispatcher("/cadastroIndicadorExame.jsp")
+             //      .forward(request, response);
             
             return;
         
         }
         
         
-        List<Medicamento> medicamentos = RepositorioMedicamento.lerTudo();
+        List<IndicadorExame> indicadorexames = RepositorioIndicadorExame.lerTudo();
         
         HttpSession session = request.getSession();
         
-        session.setAttribute("medicamentos", medicamentos);
+        session.setAttribute("IndicadorExames", indicadorexames);
         
-        response.sendRedirect("Medicamentos.jsp");
-    }
+        response.sendRedirect("IndicadorExames.jsp");
+    } */
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -118,38 +120,38 @@ public class MedicamentoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       
+        //processRequest(request, response);
         String op = request.getParameter("op");
         
         int codigo = Integer.parseInt(request.getParameter("codigo"));
-        String nome = request.getParameter("nome");
-        int dosagem = Integer.parseInt(request.getParameter("dosagem"));
-        String tipoDosagem = request.getParameter("tipoDosagem");
-        String descricao = request.getParameter("descricao");
+        String dataHora = request.getParameter("data");
+        String dataHoraVolta = request.getParameter("dataVolta");
         String observacao = request.getParameter("observacao");
+        String cpfPaciente = request.getParameter("cpfPaciente");
         
-        Medicamento m = new Medicamento();
-        m.setCodigo(codigo);
-        m.setNome(nome);
-        m.setDosagem(dosagem);
-        m.setTipoDosagem(tipoDosagem);
-        m.setDescricao(descricao);
-        m.setObservacao(observacao);
+        Medico medicoLogado = (Medico) request.getSession().getAttribute("medicoLogado");
         
+        Paciente p = RepositorioPaciente.ler(cpfPaciente);
+        
+        Consulta c = new Consulta();
+        c.setCodigo(codigo);
+        c.setDataHora(dataHora);
+        c.setDataHoraVolta(dataHoraVolta);
+        c.setObservacao(observacao);
+        c.setPaciente(p);
+        c.setMedico(medicoLogado);
         
         if(op!=null && op.equals("alterar")){
-            RepositorioMedicamento.atualizar(m);
-            request.getSession().setAttribute("msg","Medicamento Atualizado com Sucesso!");
+            RepositorioConsultas.atualizar(c);
+            request.getSession().setAttribute("msg","Consulta Atualizado com Sucesso!");
         }else{
-            RepositorioMedicamento.inserir(m);
-            request.getSession().setAttribute("msg","Medicamento Cadastrado com Sucesso!");
+            RepositorioConsultas.inserir(c);
+            request.getSession().setAttribute("msg","Consulta Cadastrada com Sucesso!");
         }
         
         
         
-        response.sendRedirect("MedicamentoServlet");
-       
+        response.sendRedirect("MedicoServlet");
     }
 
     /**
