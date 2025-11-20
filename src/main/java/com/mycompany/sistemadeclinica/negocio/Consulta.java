@@ -17,6 +17,15 @@ public class Consulta {
     
     private Paciente paciente;
     private Medico medico;
+    private Prontuario prontuario;
+
+    public Prontuario getProntuario() {
+        return prontuario;
+    }
+
+    public void setProntuario(Prontuario prontuario) {
+        this.prontuario = prontuario;
+    }
     
     public Paciente getPaciente() {
         return paciente;

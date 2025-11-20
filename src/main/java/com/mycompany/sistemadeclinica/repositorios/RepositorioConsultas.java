@@ -5,6 +5,7 @@
 package com.mycompany.sistemadeclinica.repositorios;
 
 import com.mycompany.sistemadeclinica.negocio.Consulta;
+import com.mycompany.sistemadeclinica.negocio.Medico;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +58,21 @@ public class RepositorioConsultas {
         return consultas;
     }
     
+    public static List<Consulta> lerPorMedico(Medico m) {
+        
+        String crmMedico = m.getCrm();
+        
+        List<Consulta> consultasDoMedico = new ArrayList<>();
+        
+        for (Consulta c : consultas) {
+            if (c.getMedico() != null && c.getMedico().getCrm().equals(crmMedico)) {
+                consultasDoMedico.add(c);
+            }
+        }
+        return consultasDoMedico;
+    
+    
+    }
 }
 
     

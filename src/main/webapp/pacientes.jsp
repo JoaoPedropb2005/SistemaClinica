@@ -17,7 +17,6 @@
     <body>
         <div class="container">
             <%
-                // Pega a mensagem de sucesso da sessão
                 String msg = (String) session.getAttribute("msg");
                 if (msg != null) {
             %>
@@ -26,7 +25,6 @@
                     session.removeAttribute("msg");
                 }
             
-                // CORREÇÃO: Pega a lista de pacientes da SESSÃO
                 List<Paciente> pacientes = (List) session.getAttribute("pacientes");
             %>
 

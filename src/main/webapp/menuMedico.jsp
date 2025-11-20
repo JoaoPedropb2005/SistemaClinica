@@ -22,11 +22,14 @@
         <div class="collapse navbar-collapse" id="navMedico">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                     <button class="btn btn-info" data-bs-toggle="modal"
-                        data-bs-target='#modalConsulta'>Marcar Consulta</button>
+                    <button class="btn btn-info" data-bs-toggle="modal"
+                            data-bs-target='#modalConsulta'>Marcar Consulta</button>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ConsultaServlet?op=listarRealizadas">Prontuários Realizados</a>
                 </li>
             </ul>
-            
+
             <div class="d-flex">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
